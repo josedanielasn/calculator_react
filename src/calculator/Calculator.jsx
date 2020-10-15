@@ -31,10 +31,10 @@ const Calculator = () => {
   const[lastButton, setLastButton] = useState('number')
   const[firstValue, setFirstValue] = useState(0)
   const[operator, setOperator] = useState(null)
-
+  
   const actionForButtons = (id,label,action) => {
     if(action === 'number' && display.length < 14){
-      if (display === '0' || lastButton === 'operator' || lastButton === 'calculate'){
+      if (display === '0' || lastButton === 'calculate'){
         setDisplay(label)
       }
       else {
@@ -61,6 +61,7 @@ const Calculator = () => {
       setLastButton('operator')
       setOperator(action)
       setFirstValue(display)
+      setDisplay('0')
     }
 
     if(action === 'calculate'){
@@ -90,9 +91,6 @@ const Calculator = () => {
     }
 
     result = parseFloat(result.toFixed(6))
-
-    
-  
     return (result.toString().length > 14 ? 'Number is too big': result);
   }
 
