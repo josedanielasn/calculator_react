@@ -29,24 +29,25 @@ const Calculator = () => {
 
   const[display, setDisplay] = useState('0')
   const[lastButton, setLastButton] = useState('number')
-  const[firstValue, setFirstValue] = useState(null)
-  const[secondValue, setSecondValue] = useState(null)
+  const[firstValue, setFirstValue] = useState(0)
   const[operator, setOperator] = useState(null)
 
   const actionForButtons = (id,label,action) => {
-    if(action === 'number'){
-      if (display === '0' || lastButton === 'operator'){
+    if(action === 'number' && display.length < 14){
+      if (display === '0' || lastButton === 'operator' || lastButton === 'calculate'){
         setDisplay(label)
       }
       else {
+        console.log('j')
         setDisplay(display + label)
       }
+      setLastButton(action)
     }
 
-    if(id === 'decimal'){
+    if(id === 'decimal' && display.length !== 14){
       if(!display.includes('.')){
         setDisplay(display + '.')
-      } else if(display === '0'){
+      } else if(display === '0'|| lastButton === 'operator' ){
         setDisplay('0.')
       }
     }
@@ -60,24 +61,22 @@ const Calculator = () => {
       setLastButton('operator')
       setOperator(action)
       setFirstValue(display)
-    
-
     }
 
     if(action === 'calculate'){
-      setSecondValue(display)
-      console.log(secondValue)
-      const calcValue = calculate(firstValue, secondValue, operator)
-      setDisplay(calcValue)
+      setOperator(action)
+      let calcValue = calculate(firstValue, display, operator)
+      setDisplay(`${calcValue}`)
     }
     
+    if(action === 'clear'){
+        setDisplay('0')
+    }
 
   }
 
-  const calculate = (n1,n2) =>{
+  const calculate = (n1,n2 = 0) =>{
     let result = '';
-    console.log(n1)
-    console.log(n2)
     if (operator === 'add') {
       result = parseFloat(n1) + parseFloat(n2); 
     } else if (operator === 'subtract') {
@@ -86,9 +85,15 @@ const Calculator = () => {
       result = parseFloat(n1) * parseFloat(n2);
     } else if (operator === 'divide') {
       result = parseFloat(n1) / parseFloat(n2);
+    } else{
+      result = 0
     }
+
+    result = parseFloat(result.toFixed(6))
+
+    
   
-    return result;
+    return (result.toString().length > 14 ? 'Number is too big': result);
   }
 
 
