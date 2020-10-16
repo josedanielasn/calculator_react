@@ -1,8 +1,8 @@
 import React from 'react'
 
-function UpperDisplay() {
+function UpperDisplay({upper}) {
   return (
-    <div className='display -upper'></div>
+  <div className='display -upper'>{upper}</div>
   )
 }
 
