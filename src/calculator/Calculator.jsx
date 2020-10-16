@@ -8,6 +8,7 @@ const Calculator = () => {
   const[lastButton, setLastButton] = useState('number')
   const[firstValue, setFirstValue] = useState(0)
   const[operator, setOperator] = useState(null)
+  const[upper, setUpper] = useState(0)
   
   const actionForButtons = (id,label,action) => {
     if(action === 'number' && display.length < 14){
@@ -38,10 +39,13 @@ const Calculator = () => {
       setLastButton('operator')
       setOperator(action)
       setFirstValue(display)
+      setUpper(display + label)
       setDisplay('0')
+
     }
 
     if(action === 'calculate'){
+      setUpper(upper + display)
       setOperator(action)
       let calcValue = calculate(firstValue, display, operator)
       setDisplay(`${calcValue}`)
@@ -59,11 +63,11 @@ const Calculator = () => {
     if (operator === 'add') {
       return x1 + x2
     } else if (operator === 'subtract') {
-      return x1 + x2
+      return x1 - x2
     } else if (operator === 'multiply') {
-      return x1 + x2
+      return x1 * x2
     } else if (operator === 'divide') {
-      return x1 + x2
+      return x1 / x2
     } else{
       return 0
     }
@@ -72,7 +76,7 @@ const Calculator = () => {
 
   return (
     <div className ='calculator-box'>
-      <UpperDisplay/>
+      <UpperDisplay upper={upper}/>
       <Display displayNum={display}/>
      <div className ='calculator -keys'>
       <KeyPad renderNumber={actionForButtons}/>
