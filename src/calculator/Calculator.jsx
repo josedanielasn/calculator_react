@@ -54,19 +54,19 @@ const Calculator = () => {
   }
 
   const calculate = (n1,n2 = 0) =>{
-    let result
+    const x1 = parseFloat(n1)
+    const x2 = parseFloat(n2)
     if (operator === 'add') {
-      result = parseFloat(n1) + parseFloat(n2) 
+      return x1 + x2
     } else if (operator === 'subtract') {
-      result = parseFloat(n1) - parseFloat(n2)
+      return x1 + x2
     } else if (operator === 'multiply') {
-      result = parseFloat(n1) * parseFloat(n2)
+      return x1 + x2
     } else if (operator === 'divide') {
-      result = parseFloat(n1) / parseFloat(n2)
+      return x1 + x2
     } else{
-      result = 0
+      return 0
     }
-    return result
   }
 
 
