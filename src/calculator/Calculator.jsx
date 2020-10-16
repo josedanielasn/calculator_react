@@ -14,10 +14,16 @@ const Calculator = () => {
     if(action === 'number' && display.length < 14){
       if (display === '0' || lastButton === 'calculate'){
         setDisplay(label)
+        if (upper =='0'){
+          setUpper(label)
+        } else {
+          setUpper(upper + label)
+        }
+        
       }
       else {
-        console.log('j')
         setDisplay(display + label)
+        setUpper(upper + label)
       }
       setLastButton(action)
     }
@@ -39,20 +45,21 @@ const Calculator = () => {
       setLastButton('operator')
       setOperator(action)
       setFirstValue(display)
-      setUpper(display + label)
+      setUpper(upper + label)
       setDisplay('0')
 
     }
 
     if(action === 'calculate'){
-      setUpper(upper + display)
       setOperator(action)
       let calcValue = calculate(firstValue, display, operator)
       setDisplay(`${calcValue}`)
+      setUpper(`${calcValue}`)
     }
     
     if(action === 'clear'){
         setDisplay('0')
+        setUpper('0')
     }
 
   }
